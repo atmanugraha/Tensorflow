@@ -206,9 +206,9 @@ if __name__ == "__main__":
               data_true += 1
 
           accuracy = (data_true / total_data) * 100
-          sys.stdout.write('\r>> Processing %d images. Total data true = %d. Accuracy %.2f%% \r\n' % (total_data, data_true, accuracy))
+          sys.stdout.write('\r>> Processing %d images. Total data true = %d. Accuracy %.2f%% \n' % (total_data, data_true, accuracy))
           sys.stdout.flush()
   
 
-
-  tf.logging.info('Process done! Final accuracy %.2f%% \r\n' % (accuracy))
+  sys.stdout.write('Process done! Final accuracy %.2f%% \r\n' % (accuracy))
+  sys.stdout.flush()
