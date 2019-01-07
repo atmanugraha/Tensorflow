@@ -25,6 +25,7 @@ import collections
 import os.path
 import re
 import sys
+import time
 
 def load_graph(model_file):
   graph = tf.Graph()
@@ -120,6 +121,7 @@ def create_image_list(image_dir):
 
 
 if __name__ == "__main__":
+  startTime = time.time()
   file_name = "tensorflow/examples/label_image/data/grace_hopper.jpg"
   file_directory = ""
   model_file = \
@@ -223,7 +225,6 @@ if __name__ == "__main__":
           sys.stdout.write('\r>> Processing %d images. Total data true = %d. Accuracy %.2f%% \n' % (total_data, data_true, accuracy))
           sys.stdout.flush()
   
-
   sys.stdout.write('Clear accuracy %.2f%% \r\n' % ((true_per_category[0]/total_per_category[0]) * 100))
   sys.stdout.flush()
   sys.stdout.write('Crystals accuracy %.2f%% \r\n' % ((true_per_category[1]/total_per_category[1]) * 100))
@@ -232,5 +233,7 @@ if __name__ == "__main__":
   sys.stdout.flush()
   sys.stdout.write('Precipitate accuracy %.2f%% \r\n' % ((true_per_category[3]/total_per_category[3]) * 100))
   sys.stdout.flush()
-  sys.stdout.write('Process done! Final accuracy in average %.2f%% \r\n' % (accuracy))
+  endTime = time.time()
+  runningTime = endTime - startTime
+  sys.stdout.write('Process done in %d s! Final accuracy in average %.2f%% \r\n' % (runningTime, accuracy))
   sys.stdout.flush()
