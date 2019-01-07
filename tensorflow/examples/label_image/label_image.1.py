@@ -174,6 +174,18 @@ if __name__ == "__main__":
   graph = load_graph(model_file)
   image_list = create_image_list(file_directory)
 
+  true_per_category = {
+    0: 0,
+    1: 0,
+    2: 0,
+    3: 0
+  }
+  total_per_category = {
+    0: 0,
+    1: 0,
+    2: 0,
+    3: 0
+  }
   data_true = 0
   total_data = 0
 
@@ -202,13 +214,23 @@ if __name__ == "__main__":
           results = np.squeeze(results)
           result = results.argsort()[::-1]
           total_data += 1
+          total_per_category[category_list[category]] += 1
           if result[0] == category_list[category]:
               data_true += 1
+              true_per_category[category_list[category]] +=1
 
           accuracy = (data_true / total_data) * 100
           sys.stdout.write('\r>> Processing %d images. Total data true = %d. Accuracy %.2f%% \n' % (total_data, data_true, accuracy))
           sys.stdout.flush()
   
 
-  sys.stdout.write('Process done! Final accuracy %.2f%% \r\n' % (accuracy))
+  sys.stdout.write('Clear accuracy %.2f%% \r\n' % ((true_per_category[0]/total_per_category[0]) * 100))
+  sys.stdout.flush()
+  sys.stdout.write('Crystals accuracy %.2f%% \r\n' % ((true_per_category[1]/total_per_category[1]) * 100))
+  sys.stdout.flush()
+  sys.stdout.write('Other accuracy %.2f%% \r\n' % ((true_per_category[2]/total_per_category[2]) * 100))
+  sys.stdout.flush()
+  sys.stdout.write('Precipitate accuracy %.2f%% \r\n' % ((true_per_category[3]/total_per_category[3]) * 100))
+  sys.stdout.flush()
+  sys.stdout.write('Process done! Final accuracy in average %.2f%% \r\n' % (accuracy))
   sys.stdout.flush()
